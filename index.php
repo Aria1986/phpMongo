@@ -47,7 +47,16 @@ $tweets = $collection->find([], [
         <?php foreach ($tweets as $tweet):?>
         <tr>
                     <th scope="row"><?= $tweet['user']; ?></th>
-                    <td><?= $tweet['message']; ?></td>
+                    <td class="messages"><p><?= $tweet['message']; ?></p>
+                    <div id="tweet<?= $tweet['_id'] ?>" style="display:none;"> 
+                        <form action="update_tweet" method="POST">
+                            <input type="hidden" name="id" value="<?=$tweet['_id'] ?>">
+                            <input  value="<?= $tweet['message']; ?>" name="nouveauTweet">
+                            <button type="submit">valider modif</button>
+                        </form>
+                    </div>
+                    </td>
+
                     <td><?= $tweet['timestamp']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
                     <td class='border px-2 py-1'>
                         <form action='delete_tweet.php' method='post'>
@@ -77,5 +86,6 @@ $tweets = $collection->find([], [
         </div>
         <button type="submit">Envoyer tweet</button>
     </form>
+    <script src="index.js"></script>
 </body>
 </html>
