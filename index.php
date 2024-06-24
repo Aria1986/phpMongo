@@ -21,7 +21,6 @@ $tweets = $collection->find([], [
 
 
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +42,7 @@ $tweets = $collection->find([], [
             <th scope="col">tweet</th>
             <th scope="col">date</th>
             <th scope="col" colspan="2">Modifications</th>
+            <th scope="col">like</th>
         </tr>
         <?php foreach ($tweets as $tweet):?>
         <tr>
@@ -70,6 +70,14 @@ $tweets = $collection->find([], [
                             <button class="btn btn-light" type="submit"><i class="fa-solid fa-pen"></i></button>
                         </form>
                     </td>
+                    <td class='border px-2 py-1'>
+                        <form action='like.php' method='post'>
+                            <input type="hidden" name="likeTweetId" value="<?= $tweet['_id'] ?>">
+                            <?= isset($tweet['likes']) ? $tweet['likes'] :0 ?>
+                            <button class="btn btn-light" type="submit"><i class="fa-solid fa-heart"></i></button>
+                        </form>
+                    </td>
+                    
         </tr>
         <?php endforeach ?>  
     </thead>
