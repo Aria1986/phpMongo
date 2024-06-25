@@ -22,20 +22,25 @@ ob_start();
             <th scope="col">Supprimer</th>
             <th scope="col">like</th>
         </tr>
+        <!-- affichage de la liste des tweets -->
         <?php foreach ($tweets as $tweet):?>
         <tr>
                     <th scope="row"><?= $tweet['user']; ?></th>
                     <td class="messages"><p><?= $tweet['message']; ?></p>
+                    <!-- tweets modification possible seulement pour ses propres tweets -->
                     <div id="tweet<?= $tweet['_id'] ?>" style="display:none;"> 
+                    <?php if ($tweet['user'] == $_SESSION['username']): ?>
                         <form action="update_tweet" method="POST">
                             <input type="hidden" name="id" value="<?=$tweet['_id'] ?>">
                             <input  value="<?= $tweet['message']; ?>" name="nouveauTweet">
                             <button type="submit">valider modif</button>
                         </form>
+                    <?php endif ?>
                     </div>
                     </td>
 
                     <td><?= $tweet['timestamp']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
+                    <!-- suppression tweets -->
                     <?php if ($tweet['user'] == $_SESSION['username']): ?>
                         <td class='border px-2 py-1'>
                             <form action='delete_tweet.php' method='post'>
@@ -46,6 +51,7 @@ ob_start();
                     <?php else: ?>
                         <td></td>
                     <?php endif ?>
+                    <!-- likes -->
                     <td class='border px-2 py-1'>
                         <form action='like.php' method='post'>
                             <input type="hidden" name="likeTweetId" value="<?= $tweet['_id'] ?>">
