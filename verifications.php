@@ -1,5 +1,4 @@
 <?php
-include 'config.php';
 
 function verifierPseudo(){
     if (isset($_POST['pseudo'])){
@@ -31,7 +30,7 @@ function verifConnection(){
 }
 
 
-function verifTweet(){
+function verifTweet($collection){
     if(isset($_POST['message'])){
         $userName = $_SESSION['username'];
         $message = $_POST['message'];
@@ -40,6 +39,5 @@ function verifTweet(){
             'message' => $message,
             'timestamp' => new MongoDB\BSON\UTCDateTime()
         ]);
-
     }
 }
