@@ -73,12 +73,28 @@ ob_start();
                         <form action='retweeter.php' method='post'>
                             <input type="hidden" name="tweetUser" value="<?= $tweet['user'] ?>">
                             <input type="hidden" name="tweetMsg" value="<?= $tweet['message'] ?>">                   
-                            <button class="btn btn-light" type="submit">retweeter</button>
+                            <button class="btn btn-light" type="submit"><i class="fa-regular fa-copy"></i></button>
                         </form>
                     </td> 
                     <?php else:?>
                         <td></td>    
                     <?php endif ?>
+                    <!-- commentaires -->
+                    <td>
+                        <?php 
+                        if(isset($tweet['comments'])):
+                            foreach($tweet['comments']as $comment): ?>
+                                
+                            <p><?= $comment['message']?></p>
+                            <?php 
+                            endforeach;
+                        endif; ?>
+                    <form action='commenter.php' method='post'>
+                        <input type="hidden" name="commentTweetId" value="<?= $tweet['_id'] ?>">
+                        <textarea type="text" name="commentaire"  ></textarea>           
+                        <button class="btn btn-light" type="submit">valider commentaire</button>
+                    </form>
+                    </td>
         </tr>
         <?php endforeach ?>  
     </thead>
