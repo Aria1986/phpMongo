@@ -1,10 +1,4 @@
-<?php
 
-session_start();
-require 'verifications.php';
-require_once 'config.php';
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +22,7 @@ require_once 'config.php';
         </div>
         <input type="submit" class="bg-primary px-2 rounded text-uppercase m-2" name="validerUser" value=Entrer></a>
     </form>
-    <a href="form_inscription.php">Pas encore inscrit?Cliquez pour vous inscrire</a>
-<?php verifierPseudo($users); ?>
+    <a href="inscription.php">Pas encore inscrit?Cliquez pour vous inscrire</a>
 </div>
 </body>
 </html>

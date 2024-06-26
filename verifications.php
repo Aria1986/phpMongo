@@ -1,14 +1,17 @@
 <?php
+include 'config.php';
 
-function verifierPseudo(){
+function verifierPseudo($users){
     if (isset($_POST['pseudo'])){
+        $users=
+        $userBdd= $users->findOne(['username'=>$_POST['pseudo']]);
         $_SESSION['username'] = $_POST['pseudo'];
         $_SESSION['connect'] = true;
         echo"pseudo ok";
         header('location:accueil.php');
         exit();
     }
-    else if (!isset($_POST['pseudo']) && isset($_POST['validerPseudo'])){echo "Veuillez saisir un pseudo";}
+    else if (!isset($_POST['pseudo']) && isset($_POST['validerUser'])){echo "Veuillez saisir un pseudo";}
 }
 
 function verifConnection(){
