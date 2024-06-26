@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once ('config.php');
+include 'config.php';
 require 'verifications.php';
 
 verifConnection();
@@ -13,9 +13,8 @@ $tweets = $collection->find([], [
 
 
 $user = $users->findOne(["username" => $_SESSION['username'] ]);
-
-if (isset($user) && isset($user['userRole'])) echo $user['userRole'];
-else echo"pas de role";
+if (isset($user['follows'])) {var_dump($user['follows']);}
+// var_dump( $user);
 
 ob_start();
 ?>
@@ -29,16 +28,31 @@ ob_start();
             <th scope="col">Supprimer</th>
             <th scope="col">like</th>
             <th scope="col">retweeter</th>
+            <th scope="col">Commentaires</th>
         </tr>
         <!-- affichage de la liste des tweets -->
         <?php foreach ($tweets as $tweet):?>
         <tr>
-                    <th scope="row"><?= $tweet['user']; ?></th>
-                    <td class="messages"><p><?= $tweet['message']; ?></p>
+                    
+                    <?php if ($tweet['user'] == $_SESSION['username']) : ?>
+                        <!-- || $user['follows']==$tweet['user'] -->
+                        <th scope="row"><?= $tweet['user']; ?></th>
+                    <?php else: ?>
+                        <th scope="row"><?= $tweet['user']; ?>
+                        <form action="follow.php" method="POST">
+                            <input type="hidden" name="userFollowed" value="<?=$tweet['user'] ?>">
+                            <input type="hidden" name="userId" value="<?=$user['_id'] ?>">
+                            <button type="submit"><i class="fa-solid fa-user-plus"></i></button>
+                        </form>
+                        </th>
+                    <?php endif ?>                       
+                    
+
                     <!-- tweets modification possible seulement pour ses propres tweets -->
+                    <td class="messages"><p><?= $tweet['message']; ?></p>                 
                     <div id="tweet <?= $tweet['_id'] ?>" style="display:none;"> 
                     <?php if ($tweet['user'] == $_SESSION['username']): ?>
-                        <form action="update_tweet" method="POST">
+                        <form action="update_tweet.php" method="POST">
                             <input type="hidden" name="id" value="<?=$tweet['_id'] ?>">
                             <input  value="<?= $tweet['message']; ?>" name="nouveauTweet">
                             <button type="submit">valider modif</button>
@@ -101,10 +115,6 @@ ob_start();
     <tbody>
      </table>
     <form action="#" class="py-4" method="POST" >
-        <!-- <div>
-            <label class="form-label mb-3" for="username">entrez votre nom</label>
-            <input type="text" name="username" class="form-control">
-        </div> -->
         <div>
             <label class="form-label mb-3" for="message">entrez votre message</label>
             <textarea type="text" name="message" class="form-control"></textarea>

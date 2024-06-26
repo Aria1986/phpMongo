@@ -6,7 +6,7 @@ include_once ('config.php');
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $commentMessage = $_POST['commentaire'];
     $tweetId= $_POST['commentTweetId'];
-    var_dump($_POST);
+
     try {
         $updateResult =$collection->updateOne(
         ['_id' => new MongoDB\BSON\ObjectId($tweetId)],

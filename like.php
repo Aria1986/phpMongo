@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if ($updateResult->getModifiedCount() === 1) {
             echo "tweet updated!";
-            header('location: index.php');
+            header('location: accueil.php');
         }
         else{
             echo "aucun tweet correspondant n'a été trouvé";

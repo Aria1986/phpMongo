@@ -1,0 +1,7 @@
+    db.users.insertMany([
+        {"username": "alice_johnson" ,"userRole": "moderator"},
+        {"username": "bob_brown"},
+        {"username": "carol_white"},
+        {"username": "jane_smith"},
+        {"username": "john_doe"}
+    ])
