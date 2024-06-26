@@ -12,13 +12,23 @@ $tweets = $collection->find([], [
 ]);
 
 if (isset($_SESSION['message'])) {
-    echo "class='alert alert-primary'>" . $_SESSION['message'] . "</p>";
+    echo "<p class='alert alert-primary'>" . $_SESSION['message'] . "</p>";
     unset($_SESSION['message']); // Clear the message after displaying
 }
 
-$user = $users->findOne(["username" => $_SESSION['username'] ]);
-if (isset($user['follows'])) {var_dump($user['follows']);}
-// var_dump( $user);
+$user = $users->findOne([],["username" => $_SESSION['username'] ]);
+
+// if (isset($user['follows'])){
+//     foreach($user['follows'] as $userFollowed){
+//     if($userFollowed == tweet['user']) $verifFollowable= false;
+//     else $verifFollowable= true; 
+//     }
+// }
+// $userIsFollowed=$users->find(
+//     ['_id' => new MongoDB\BSON\ObjectId($user['_id']),
+//     'follows.user' =>['$nin' => [$tweet['user']]]
+//     ] 
+// );
 
 ob_start();
 ?>
@@ -33,13 +43,20 @@ ob_start();
 <!-- <?php verifTweet($collection);?> -->
         <!-- affichage de la liste des tweets -->
     <div class="ms-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">    
-        <?php foreach ($tweets as $tweet):?>
+        <?php foreach ($tweets as $tweet):
+        // Vérifier si le rédacteur du tweet est follow 
+        if (isset($user['follows'])){
+            foreach($user['follows'] as $userFollowed){
+            if($userFollowed['user'] == $tweet['user']) $verifFollowable= false;
+            else $verifFollowable= true; 
+            }
+        }
+        ?>
             <div class="card m-3" style="width: 18rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <!-- || $user['follows']==$tweet['user'] -->
                         <h5 class="card-title"><?= $tweet['user']; ?></h5>
-                        <?php if ($tweet['user'] != $_SESSION['username']) : ?> 
+                        <?php if ($tweet['user'] != $_SESSION['username'] && $verifFollowable) : ?> 
                             <form action="follow.php" method="POST">
                                 <input type="hidden" name="userFollowed" value="<?=$tweet['user'] ?>">
                                 <input type="hidden" name="userId" value="<?=$user['_id'] ?>">
