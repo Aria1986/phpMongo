@@ -33,7 +33,7 @@ ob_start();
         <!-- affichage de la liste des tweets -->
         <?php foreach ($tweets as $tweet):?>
         <tr>
-                    
+                    <!-- follows -->
                     <?php if ($tweet['user'] == $_SESSION['username']) : ?>
                         <!-- || $user['follows']==$tweet['user'] -->
                         <th scope="row"><?= $tweet['user']; ?></th>

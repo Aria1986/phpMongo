@@ -1,15 +1,19 @@
 <?php
-include 'config.php';
+
 
 function verifierPseudo($users){
-    if (isset($_POST['pseudo'])){
-        $users=
+    if (isset($_POST['pseudo']) && isset($_POST['password'])){
         $userBdd= $users->findOne(['username'=>$_POST['pseudo']]);
-        $_SESSION['username'] = $_POST['pseudo'];
-        $_SESSION['connect'] = true;
-        echo"pseudo ok";
-        header('location:accueil.php');
-        exit();
+        if($userBdd){
+            $_SESSION['username'] = $_POST['pseudo'];
+            $_SESSION['connect'] = true;
+            echo"pseudo ok";
+            header('location:accueil.php');
+            exit();
+        }
+        else{     
+            echo "<p class='error'>pseudo non existant veuillez le vérifier ou vous inscrire si vous ne l'êtes pas.</p>";
+        }
     }
     else if (!isset($_POST['pseudo']) && isset($_POST['validerUser'])){echo "Veuillez saisir un pseudo";}
 }
