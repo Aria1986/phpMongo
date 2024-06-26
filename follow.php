@@ -8,19 +8,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $userFollowed = $_POST['userFollowed'];
     $userId = $_POST['userId'];
     try {
-        $updateResult=$collection->updateOne(
+        $updateResult=$users->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($userId)],
             ['$push' => ['follows' => 
                 ['user' => $userFollowed]
             ]]
             );
         if($updateResult->getModifiedCount() === 1){
-            echo $userFollowed.'add to user followed';
             header('location:accueil.php');
+            $_SESSION['message'] = $userFollowed.'add to user followed';
             exit();
         }
         else{
-            echo "aucun utilisateur correspondant n'a été trouvé";
+            $_SESSION['message'] = "aucun utilisateur correspondant n'a été trouvé";
         }
     }
     catch(MongoDB\Exception\UnsupportedException $e){

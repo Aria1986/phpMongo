@@ -1,4 +1,12 @@
 
+<?php
+session_start();
+if (isset($_SESSION['message'])) {
+    echo "<p class='alert alert-primary'>" . $_SESSION['message'] . "</p>";
+    unset($_SESSION['message']); // Clear the message after displaying
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +19,9 @@
 </head>
 <body>
 <div class="container col-10 col-sm-5 m-auto p-5 text-center">
-    <form method="POST">
+    <form action="inscription.php" method="POST">
         <div>
+            <h2>Inscription</h2>
             <label class="form-label" for="pseudo">Pseudo</label>
             <input type="text" id="pseudo"  class ="form-control" name="pseudo" required placeholder="Écrivez votre pseudo ici" > 
         </div>
@@ -20,9 +29,8 @@
             <label class="form-label" for="password">Mot de passe</label>
             <input type="password" id="password" class ="form-control" name="password" required placeholder="XXXX" > 
         </div>
-        <input type="submit" class="bg-primary px-2 rounded text-uppercase m-2" name="validerUser" value=Entrer></a>
+        <input type="submit" class="bg-primary px-2 rounded text-uppercase m-2" name="validerUser" value=Valider></a>
     </form>
-    <a href="inscription.php">Pas encore inscrit?Cliquez pour vous inscrire</a>
 </div>
 </body>
 </html>

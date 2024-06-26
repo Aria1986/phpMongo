@@ -3,7 +3,10 @@
 session_start();
 require 'verifications.php';
 require_once 'config.php';
-
+if (isset($_SESSION['message'])) {
+    echo "<p class='alert alert-primary'>" . $_SESSION['message'] . "</p>";
+    unset($_SESSION['message']); // Clear the message after displaying
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

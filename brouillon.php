@@ -17,7 +17,7 @@ ob_start();
     <form action="update_tweet.php" method="POST">
           <input type="hidden" name="id" >
           <input class="form-control"  name="nouveauTweet">
-          <button class="btn bg-primary m-2" type="submit">valider modif</button>
+          <button class="btn btn-light" type="submit">valider modif</button>
     </form> 
     <div class="d-flex justify-content-between">
         <!-- likes -->
@@ -37,17 +37,15 @@ ob_start();
                               <button class="btn btn-light" type="submit"><i class="fa-regular fa-copy"></i></button>
                           </form>
     </div>
+    <!-- commentaires -->
+    <p>bvofhzfh zihf hiahfa faf</p>
+    <form action='commenter.php' method='post'>
+              <input type="hidden" name="commentTweetId" >
+                <textarea type="text" name="commentaire"  ></textarea>           
+                  <button class="btn bg-primary m-2"  type="submit">valider commentaire</button>
+    </form>
   </div>
 </div>
-
-
-<!-- nom utilisateur</th>
-            <th scope="col">tweet</th>
-            <th scope="col">date</th>
-            <th scope="col">Supprimer</th>
-            <th scope="col">like</th>
-            <th scope="col">retweeter</th>
-            <th scope="col">Commentaires</th -->
 
 <?php
 $title = "View test";
