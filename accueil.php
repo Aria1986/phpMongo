@@ -105,9 +105,10 @@ ob_start();
                     <?php 
                         if(isset($tweet['comments'])):
                             foreach($tweet['comments']as $comment): ?>
-                                
-                            <p><?= $comment['message']?></p>
-                            <?php 
+                             <div class="bg-light p-2 rounded mb-1">  
+                                <p><b><?= $comment['user'].' </b>'. $comment['timestamp']->toDateTime()->format('Y-m-d H:i').'</p>
+                                <p>'. $comment['message'].'</p>
+                            </div> ';            
                             endforeach;
                         endif; ?>
                     <form action='commenter.php' method='post'>
