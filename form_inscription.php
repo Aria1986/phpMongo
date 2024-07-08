@@ -29,7 +29,7 @@ if (isset($_SESSION['message'])) {
             <label class="form-label" for="password">Mot de passe</label>
             <input type="password" id="password" class ="form-control" name="password" required placeholder="XXXX" > 
         </div>
-        <input type="submit" class="bg-primary px-2 rounded text-uppercase m-2" name="validerUser" value=Valider></a>
+        <input type="submit" class="btn btn-primary px-2 rounded text-uppercase m-2" name="validerUser" value=Valider></a>
     </form>
 </div>
 </body>

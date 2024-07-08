@@ -42,7 +42,7 @@ ob_start();
 </form>
 <!-- <?php verifTweet($collection);?> -->
         <!-- affichage de la liste des tweets -->
-    <div class="ms-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">    
+    <div class="ms-2 ms-sm-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">    
         <?php foreach ($tweets as $tweet):
         // Vérifier si le rédacteur du tweet est follow 
         if (isset($user['follows'])){

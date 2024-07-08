@@ -1,7 +1,7 @@
 <?php
 
 
-function verifierPseudo($users){
+function verifierIdentification($users){
     if (isset($_POST['pseudo']) && isset($_POST['password'])){
         $userBdd= $users->findOne(['username'=>$_POST['pseudo']]);
         if($userBdd){
