@@ -4,6 +4,7 @@
 function verifierIdentification($users){
     //les champs pseudo et passord sont remplis
     if (isset($_POST['pseudo']) && isset($_POST['password'])){
+        //filtrer les inputs pour éviter script malveillant
         $pseudo = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
         //verif si le pseudo est d'un format valide dans ce cas le chercher dans la bdd
@@ -21,7 +22,7 @@ function verifierIdentification($users){
                     else $_SESSION['message'] = 'mot de passe incorrect';
                     
                 }
-            else echo "<p class='error'>pseudo non existant veuillez le vérifier ou vous inscrire si vous ne l'êtes pas.</p>";
+                else $_SESSION['message'] = "pseudo non existant veuillez le vérifier ou vous inscrire si vous ne l'êtes pas.";
             
         }
         else $_SESSION['message'] = 'pseudo non valide';

@@ -18,6 +18,10 @@ if (isset($_SESSION['message'])) {
 
 $user = $users->findOne([],["username" => $_SESSION['username'] ]);
 
+if (isset($user['follows'])){
+    $tweetsFollowed = $collection->find([],['user'=>["in"=>$user['follows']]]);
+}
+
 // if (isset($user['follows'])){
 //     foreach($user['follows'] as $userFollowed){
 //     if($userFollowed == tweet['user']) $verifFollowable= false;
@@ -41,8 +45,78 @@ ob_start();
      <button class="btn btn-success m-2" type="submit">Envoyer tweet</button>
 </form>
 <!-- <?php verifTweet($collection);?> -->
-        <!-- affichage de la liste des tweets -->
-    <div class="ms-2 ms-sm-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">    
+        <!-- affichage des tweets de perssonnes followed -->
+         <?php if(isset($user['follows'])):?>
+            <h2 class="m-3">Tweets de mes users Followed</h2>
+            <div class="ms-2 ms-sm-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">    
+            <?php foreach ($tweetsFollowed as $tweetFollowed):?>
+            <div class="card m-3" style="width: 18rem;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title"><?= $tweetFollowed['user']; ?></h5>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted"><?= $tweetFollowed['timestamp']->toDateTime()->format('Y-m-d H:i:s') ?></h6>
+                    <!-- tweets modification possible seulement pour ses propres tweets -->
+                    <div class="messages"><p class="card-text"><?= $tweetFollowed['message']; ?></p>   
+                    <?php if ($tweetFollowed['user'] == $_SESSION['username']): ?>
+                        <div  style="display:none;">
+                        <form action="update_tweet.php" method="POST">
+                            <input type="hidden" name="id" value="<?=$tweetFollowed['_id'] ?>">
+                            <input  value="<?= $tweetFollowed['message']; ?>" name="nouveauTweet">
+                            <button class="btn btn-light" type="submit">valider modif</button>
+                        </form>
+                        </div>
+                    <?php endif ?>
+                    </div>   
+                    <div class="d-flex justify-content-between">
+                        <!-- likes -->
+                        <form action='like.php' method='post'>
+                            <input type="hidden" name="likeTweetId" value="<?= $tweetFollowed['_id'] ?>">
+                            <?= isset($tweetFollowed['likes']) ? $tweetFollowed['likes'] :0 ?>
+                            <button class="btn btn-light" type="submit"><i class="fa-solid fa-heart"></i></button>
+                        </form>
+                        <!-- delete                 -->
+                        <?php if ($tweetFollowed['user'] == $_SESSION['username'] ||  isset($user['userRole']) && $user['userRole'] == 'moderator') : ?>
+                            <form action='delete_tweet.php' method='post'>
+                                <input type="hidden" name="deleteTweetId" value="<?= $tweetFollowed['_id'] ?>">
+                                <button type="submit"> <i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        <?php endif ?>
+                        <!-- retweeter -->
+                        <?php if($tweetFollowed['user'] != $_SESSION['username']) :?>
+                            <form action='retweeter.php' method='post'>
+                                <input type="hidden" name="tweetUser" value="<?= $tweetFollowed['user'] ?>">
+                                <input type="hidden" name="tweetMsg" value="<?= $tweetFollowed['message'] ?>">                   
+                                <button class="btn btn-light" type="submit"><i class="fa-regular fa-copy"></i></button>
+                            </form>
+                        <?php endif ?>
+                    </div>
+                    <!-- commentaires -->
+                     <h5>Commentaires</h5>
+                    <?php 
+                        if(isset($tweetFollowed['comments'])):
+                            foreach($tweetFollowed['comments']as $comment): ?>
+                             <div class="bg-light p-2 rounded mb-1">  
+                                <p><b><?= $comment['user'].' </b>'. $comment['timestamp']->toDateTime()->format('Y-m-d H:i').'</p>
+                                <p>'. $comment['message'].'</p>
+                            </div> ';            
+                            endforeach;
+                        endif; ?>
+                    <form action='commenter.php' method='post'>
+                        <input type="hidden" name="commentTweetId" value="<?= $tweetFollowed['_id'] ?>">
+                        <textarea type="text" name="commentaire"  ></textarea>           
+                        <button class="btn btn-success" type="submit">valider commentaire</button>
+                    </form>
+                </div>
+            </div>       
+        <?php endforeach?>
+    </div>
+    <?php endif; ?>
+    
+
+    <!-- affichage de la liste des tweets -->
+    <h2 class="my-3">Tous les tweets</h2>
+    <div class="ms-2 ms-sm-5 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">       
         <?php foreach ($tweets as $tweet):
         // Vérifier si le rédacteur du tweet est follow 
         if (isset($user['follows'])){
@@ -77,6 +151,7 @@ ob_start();
                         </div>
                     <?php endif ?>
                     </div>
+
                     <div class="d-flex justify-content-between">
                         <!-- likes -->
                         <form action='like.php' method='post'>

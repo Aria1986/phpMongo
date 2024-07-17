@@ -4,8 +4,9 @@ include 'config.php';
 if(isset($_POST['password'])&& isset($_POST['pseudo'])){
     $userName = $_POST['pseudo'];
     $password = $_POST['password'];
+    $isValid = true;
     //verification de la validité du mot de passe
-    if(strlen($_POST['password'])<8 || !preg_match("/^[A-Za-zÀ-Öà-ö' -]+$/", $password) ){
+    if(strlen($_POST['password'])<8 || !preg_match("/^[0-9A-Za-zÀ-Öà-ö' -]+$/", $password) ){
         $isValid = false;
         $errorMessage ="mot de passe incorrect, veuillez resaisir un mdp de 8caractères minimum ";
         
@@ -44,7 +45,7 @@ if(isset($_POST['password'])&& isset($_POST['pseudo'])){
 
 
     $verifPseudo= strlen($userName) <= 20
-        && preg_match("/^[A-Za-zÀ-Öà-ö' -]+$/",$userName);
+        && preg_match("/^[0-9A-Za-zÀ-Öà-ö' -]+$/",$userName);
     $verifPseudoExiste = $users->findOne(['username'=> $userName]);
     // si problème avec mot de passe envoyer message    
     // if(! isset($mdp)){
@@ -53,11 +54,10 @@ if(isset($_POST['password'])&& isset($_POST['pseudo'])){
     //     }
     //si problème avec pseudo
     if(isset($verifPseudoExiste) || $verifPseudo == false ){  
-        // header ("location:form_inscription.php");
         $_SESSION['message']= "erreur pseudo déjà utilisé ou incorrect veuillez saisir un autre pseudo (sans caractères spéciaux et <20 caractères).";
         header ("location:form_inscription.php");
     }
-    //création d'un user dans la bdd
+    //création d'un user dans la bdd si mdp et pseudo ok
     elseif(isset($mdp) && $verifPseudo == true){
         $users->insertOne([
         'username' => $userName,
@@ -66,9 +66,11 @@ if(isset($_POST['password'])&& isset($_POST['pseudo'])){
     header ("location:index.php");
     $_SESSION['message']="inscription réussi!";  
     }
-    else{
-        $_SESSION['message']= (string)$verifPseudo.' pseudo existe: '.isset($verifPseudoExiste).'mdp hasshe'.$mdp;
-        header ("location:form_inscription.php");
+    elseif (!$isValid) {
+            $_SESSION['message']= "Le mot de passe n'est pas valide. Veuillez en choisir un autre.\n".$errorMessage;
+            header('location:form_inscription.php');
+        // $_SESSION['message']= (string)$verifPseudo.' pseudo existe: '.isset($verifPseudoExiste).'mdp hasshe'.$mdp;
+        // header ("location:form_inscription.php");
        
     }
 }
