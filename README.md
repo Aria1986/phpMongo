@@ -2,8 +2,9 @@
 <div align=center>
 <img src="https://media.istockphoto.com/id/1337229983/fr/photo/symbole-de-bulle-ou-de-signe-de-commentaire-sur-fond-jaune.jpg?s=2048x2048&w=is&k=20&c=ZKILp1ZeypAQcBqZVcsrWNnFkn5xUMPf2ZcOBjIo_rI=" alt="bulles de discussion" width="150px" />
 </div>
+
 ## Description
-***
+
 Bienvenue sur la plateforme de micro-blogging où vous pouvez :
 
 - Vous connecter et partager vos pensées en 280 caractères ou moins.
