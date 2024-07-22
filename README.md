@@ -46,7 +46,7 @@ brew services start mongodb/brew/mongodb-community
 **Pour Linux :**
 Suivez les instructions spécifiques à votre distribution sur le site officiel.
 
-### MongoDB Shell ou compass
+#Etape 2: utilisation de MongoDB Shell ou compass
 Si vous avez une préférence pous les lignes de commandes téléchargez MongoDB Shell:
 https://www.mongodb.com/try/download/shell
 **Compass:**
@@ -63,6 +63,11 @@ MongoDB Compass est une interface graphique pour MongoDB qui permet de visualise
     - Cliquez sur "Connect" pour établir la connexion.
 
 ### Interface principale de MongoDB Compass
+
+# Etape 3:Préparation des données
+Connectez-vous à MongoDB avec le client mongo et créez une base de données et une collection pour les tweets :
+use mini_x
+db.createCollection("tweets")
 
 Une fois connecté, l'interface principale de MongoDB Compass s'affiche, comprenant plusieurs sections :
 
