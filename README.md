@@ -7,7 +7,8 @@
 
 Bienvenue sur la plateforme de micro-blogging où vous pouvez :
 
-- Vous connecter et partager vos pensées en 280 caractères ou moins.
+-  Vous inscrire en toute sécurité
+- Vous connecter et partager vos pensées.
 - Découvrir les tweets d'une communauté d'utilisateurs passionnés.
 - Suivre vos amis, votre famille et vos célébrités préférées.
 - Interagir avec les autres en retweetant, en commentant et en aimant leurs tweets.
